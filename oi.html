@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+   <head>
+    <base target="_top">
+    <style>
+
+        .userTitle{
+            position: absolute;
+            top: 72px;
+            left: 90px;
+            overflow: hidden;
+        }
+
+        .passwordTitle{
+            position: absolute;
+            top: 110px;
+            left: 90px;
+        }
+
+        .buttonEnter{
+            position: absolute;
+            top: 155px;
+            left: 150px; 
+            padding: 5px 15px;
+            font: bold 12px sans-serif; 
+            border-radius: 25px;
+            border: 1px solid #9eb9c3;
+        }
+        
+        input[type=text]:hover{
+        border-bottom:2px solid black;
+        }
+        input[type=number]:hover{
+        border-bottom:2px solid black;
+        }
+        input[type=password]:hover{
+        border-bottom:2px solid black;
+        }
+        input[type=button]:hover{
+            background-color:#bfc3c5;
+        }
+        input[type=submit]:hover{
+            background-color:#bfc3c5;
+        }
+
+        .pageLog-off{
+            display:none;
+        }
+        .pageCreate{
+            display:none;
+        }
+        .id_pageCreate-off{
+            display:none;
+        }
+        .pageS{
+            display:none;
+        }
+        .id_pageS-off{
+            display:none;
+        }
+        .pageProfile{
+            display:none;
+        }
+        .id_pageProfile-off{
+            display:none;
+        }
+
+    </style>
+    <script>
+        function Login(){
+            let email=document.getElementById("email").value;
+            let password=document.getElementById("password").value;
+            google.script.run.withSuccessHandler(function(result){
+                if(result=='TRUE'){
+                    document.getElementById("id_pageLog").className="pageLog-off";
+                    document.getElementById("id_pageProfile").className="id_pageProfile";
+                }
+                else if(result=='FALSE'){
+                document.getElementById("errorMessage").innerHTML="Invalid data";
+            }})
+            .checklLogin(email, password);
+            }
+        function pageTrade1(){
+            document.getElementById("id_pageLog").className="pageLog-off";
+            document.getElementById("id_pageCreate").className="id_pageCreate";
+        }
+        function pageTrade2(){
+            document.getElementById("id_pageS").className="id_pageS-off";
+            document.getElementById("id_pageLog").className="id_pageLog";
+        }
+        function reset(){
+            document.getElementById("id_pageProfile").className="id_pageProfile-off";
+            document.getElementById("id_pageLog").className="id_pageLog"
+        }
+        function Create() {
+            let email2=document.getElementId("email2").value;
+            let password2=document.getElementId("password2").value;
+            if (email2=="", password2==""){
+                return false;
+            }
+            else{
+                google.script.run.AddRecord(email2,password2);
+                document.getElementById("id_pageCreate").className="id_pageCreate-off";
+                document.getElementById("id_pageS").className="id_pageS";
+                return true;
+            }
+        }
+
+</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head> 
+   <body style="background-color:#5887ef">
+   <br></br>
+<form>
+        <!--pageLog-->
+    <div class="pageLog" id="id_pageLog" style="text-align: center; font: bold 14px/45px sans-serif; background-color: #fdfdfd; width:359px; height:240px; position:absolute; border-radius: 7px; box-shadow: 0px 0px 5px black; border: 1px solid black; top: 50%; left: 50%; transform: translate(-50% , -50%);"> 
+        <h3>Login</h3>
+        <input type="text" class="userTitle" id="email" placeholder="Email" style="border-top: none;border-right: none;border-left: none;outline: none; text-align: center;width: 50%;font-weight:bold;"/>
+        <br/>
+        <input type="password" class="passwordTitle" id="password" placeholder="Password" style="border-top: none;border-right: none;border-left: none;outline: none; text-align: center;font-weight:bold;"/>
+        <br><span id="errorMessage" style="color: red" ></span></br>
+        <input type="submit" class="buttonEnter" value="Login" onclick="Login()" style="padding-top: 1px;padding-bottom: 1px;padding-left: 10px;padding-right: 10px;font-weight:bold;"/>
+        <input type="button" onclick="pageTrade1()" value="Criar Conta" style="position: absolute; top: 190px; left: 132px; font-weight:bold; padding: 5px 15px; font: bold 12px sans-serif;  border-radius: 25px; border: 1px solid #9eb9c3;" />
+    </div>
+
+        <!--pageCreate-->
+    <div class="pageCreate" id="id_pageCreate" style="text-align: center; font: bold 14px/45px sans-serif; background-color: #fdfdfd; width:359px; height:240px; position:absolute; border-radius: 7px; box-shadow: 0px 0px 5px black; border: 1px solid black; top: 50%; left: 50%; transform: translate(-50% , -50%);"> 
+        <h3>Criar Conta</h3>
+        <input type="text" id="email2" placeholder="Email" style="border-top: none;border-right: none;border-left: none;outline: none; text-align: center;width: 50%;font-weight:bold;"/><br>
+        <br>
+        <input type="password" id="password2" placeholder="Create Password" style="position: absolute; top: 120px; left: 90px; border-top: none;border-right: none;border-left: none;outline: none; text-align: center;width: 50%;font-weight:bold;" /></br>
+        <input type="submit" value="Create" onclick="Create()" style="position: absolute; top: 190px; left: 150px; font-weight:bold; padding: 5px 15px; font: bold 12px sans-serif;  border-radius: 25px; border: 1px solid #9eb9c3;"/>
+    <br>
+    </div>
+    
+       <!--pageS-->
+    <div class="pageS" id="id_pageS" style="text-align: center; font: bold 14px/45px sans-serif; background-color: #fdfdfd; width:359px; height:240px; position:absolute; border-radius: 7px; box-shadow: 0px 0px 5px black; border: 1px solid black; top: 50%; left: 50%; transform: translate(-50% , -50%);"> 
+    <h2> Sua conta foi criada com sucesso!</h2>
+    <input type="submit" onclick="pageTrade2()" value="Login" style="font-weight:bold; position: absolute;top: 155px;left: 150px; padding: 5px 15px;font: bold 12px sans-serif; border-radius: 25px;border: 1px solid #9eb9c3;"></br>
+    </div>
+
+        <!--pageProfile-->
+    <div class="pageProfile" id="id_pageProfile" style="text-align: center; font: bold 14px/45px sans-serif; background-color: #fdfdfd; width:359px; height:240px; position:absolute; border-radius: 7px; box-shadow: 0px 0px 5px black; border: 1px solid black; top: 50%; left: 50%; transform: translate(-50% , -50%);"> 
+    <br>
+    <h2>KK não acabei essa parte ainda.</h2> 
+    </br>
+    <input type="button" value="Kkkk" onclick="reset()" style=" position: absolute;top: 155px;left: 150px; padding: 5px 15px;font: bold 12px sans-serif; border-radius: 25px;border: 1px solid #9eb9c3;">
+    </div>
+</form>
+   </body>
+</html>
